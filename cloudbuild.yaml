@@ -1,36 +1,25 @@
 steps:
-  # Build Docker images for the frontend and backend
+  # Build Docker image for the text generation app
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/gemini:$SHORT_SHA']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/text-generation-app:$SHORT_SHA']
   
-   
-  # Push images to Google Container Registry
+  # Push image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/gemini:$SHORT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/text-generation-app:$SHORT_SHA']
   
-  
-  
-  # Create or update deployments
+  # Create or update deployment for text generation app
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', './deployment/tex-deployment.yaml']
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=producer-cluster'
 
-  
-  
-  # Update the deployments with the new images
+  # Update the deployment with the new image
   - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['set', 'image', 'deployment/tex-deployment', 'frontend-ui=gcr.io/$PROJECT_ID/gemini:$SHORT_SHA',]
+    args: ['set', 'image', 'deployment/text-generation-app', 'text-generation-app=gcr.io/$PROJECT_ID/text-generation-app:$SHORT_SHA']
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=producer-cluster'
-  
- 
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
- 
-  
-  
