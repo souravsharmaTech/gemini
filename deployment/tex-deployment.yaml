@@ -21,7 +21,7 @@ spec:
         - containerPort: 5000
         env:
         - name: API_KEY
-          value: "AIzaSyC9uXy92lQX2knCanapxwVfEHRixkpG8rM"
+          value: "AIzaSyBe8ckMM0SSlZS_az21D1iWiqQPXibdUJs"
 ---
 apiVersion: v1
 kind: Service
