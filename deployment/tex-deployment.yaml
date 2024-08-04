@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: text-generation-app
-        image: gcr.io/iac1-424123/gemini1:latest
+        image: gcr.io/$PROJECT_ID/text-generation-app:$SHORT_SHA
         ports:
         - containerPort: 5000
         env:
